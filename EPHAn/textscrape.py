@@ -1,56 +1,8 @@
-from urllib.request import urlopen as uReq
-from bs4 import BeautifulSoup as soup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
 import pandas as pd
 
-'''Method #1
-my_url = 'https://www.erowid.org/experiences/subs/exp_Salvia_divinorum_General.shtml'
-
-# opening up connection, grabbing the page
-uClient = uReq(my_url)
-page_html = uClient.read()
-uClient.close()
-
-# html parsing
-page_soup = soup(page_html, "html.parser")
-
-for report in page_soup.find_all('a'):
-    report_link = report.get('href')
-    text = page_soup.get_text()
-    title = report.find({'input': 'Title'}).text
-    print(title)
-'''
-
-'''Method #2
-my_url = 'https://www.erowid.org/experiences/subs/exp_Salvia_divinorum_General.shtml'
-
-headers = {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'}
-
-r = requests.get(my_url, headers=headers)
-soup = soup(r.content, features='lxml')
-
-trip_reports = soup.find_all('table', class_='exp-list-table')
-
-#title_soup = soup('<input value="Title";>', 'html.parser')
-#substance_soup = soup('<input value="Substance";>', 'html.parser')
-
-for report in trip_reports:
-    report_links = report.find_all({'a': 'href'})
-
-    title = report.find_all(string="Title")
-
-    #substance = report.find_all({'td': 'Substance Name'})
-    substance = report.find_all({'th': "input "})
-    print(substance)
-'''
-'''    
-for report in soup.find_all('a'):
-    report_link = report.get('href')
-    title = report.find({'input': 'Title'})
-    print(title)
-'''
 
 '''Method 3'''
 browser = webdriver.Chrome(executable_path='/Users/Ethan/Library/Python/3.7/lib/python/site-packages/selenium/chromedriver')
