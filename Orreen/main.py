@@ -14,9 +14,12 @@ def get_substances(browser=None, return_df=True):
     if not browser:
         browser = webdriver.Chrome()
         
-    browser.get('https://www.erowid.org/experiences/exp_list.shtml')    
+    browser.get('https://www.erowid.org/experiences/exp_list.shtml')
+    root = browser.find_element_by_tag_name('body')
+    root_html = root.get_attribute('outerHTML')
+    root_soup = BeautifulSoup(root_html, 'html.parser')
         
-    substance_parents = browser.find_elements_by_tag_name('b')[3:]
+    substance_parents = root_soup.find_all('b')[3:]
 
     substance_dict = {'substance_name':[], 'substance_link':[]}
 
@@ -27,9 +30,7 @@ def get_substances(browser=None, return_df=True):
         c_names = [c.tag_name for c in children]
         print(c_names)
         '''
-        parent_html = parent.get_attribute('outerHTML')
-        parent_soup = BeautifulSoup(parent_html, 'html.parser')
-        substance_tags = parent_soup.find_all('a')
+        substance_tags = parent.find_all('a')
         
         if len(substance_tags) > 1:
             substance_tag = substance_tags[1]
