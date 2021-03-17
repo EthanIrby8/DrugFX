@@ -7,9 +7,14 @@ from selenium.common.exceptions import NoSuchElementException
 from tqdm import tqdm
 import time
 import random
+import numpy as np
 
 
 data_dir = 'data'
+
+
+def sleep_random(min_sec, max_sec):
+    time.sleep(np.random.uniform(min_sec, max_sec))
 
 
 def get_substances(browser=None, return_df=True):
@@ -82,7 +87,7 @@ def get_experience_types(browser=None, return_df=True):
             experience_type_dict['experience_type'].append(exp_type_name)
             experience_type_dict['experience_type_link'].append(exp_type_link)
         
-        time.sleep(random.randrange(5, 15)/20)
+        sleep_random(5, 7)
     
     experience_type_df = pd.DataFrame(experience_type_dict)
 
@@ -165,9 +170,9 @@ def get_experience_links(browser=None, return_df=True):
             browser.get(full_next_page_link)
             ##print("Multiple pages for", substance_name, ":", experience_type)
             
-            time.sleep(random.randrange(5, 15)/40)
+            sleep_random(5, 7)
         
-        time.sleep(random.randrange(5, 15)/40)
+        sleep_random(5, 7)
         
     experience_df = pd.DataFrame(experience_dict)
 
